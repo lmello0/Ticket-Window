@@ -1,5 +1,6 @@
 package br.com.lmello.attendant.customer;
 
+import br.com.lmello.common.Constants;
 import br.com.lmello.common.customer.ProcessedCustomerDTO;
 import br.com.lmello.common.customer.UnprocessedCustomerDTO;
 import br.com.lmello.common.workshift.WorkHourChecker;
@@ -36,14 +37,14 @@ public class CustomerService {
         LocalDateTime start = LocalDateTime.now();
 
         int chosenNumber = rand.nextInt(0, 99);
-        for (int i = 0; i < customer.operation().getOperationTime() / 1000; i++) {
+        for (int i = 0; i < customer.operation().getOperationTime() / Constants.SECOND_IN_MS; i++) {
             int guess = rand.nextInt(0, 99);
 
             if (guess == chosenNumber) {
                 break;
             }
 
-            Thread.sleep(1_000);
+            Thread.sleep(Constants.SECOND_IN_MS);
         }
 
         LocalDateTime end = LocalDateTime.now();
