@@ -100,7 +100,7 @@ public class CustomerService {
         double totalExtraTime = customers
                 .stream()
                 .filter(c -> !c.isProcessedInWorkHour())
-                .mapToDouble(c -> c.getFinishedProcessingAtMilli() - c.getArrivedAtMilli())
+                .mapToDouble(c -> c.getFinishedProcessingAtMilli() - c.getStartProcessingAtMilli())
                 .sum();
 
         return totalExtraTime / Constants.SECOND_IN_MS;
