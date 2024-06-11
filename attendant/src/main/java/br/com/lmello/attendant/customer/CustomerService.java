@@ -8,6 +8,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.logging.Logger;
 
 @Service
@@ -16,6 +17,8 @@ public class CustomerService {
     private final Logger logger = Logger.getLogger(CustomerService.class.getName());
 
     private final KafkaTemplate<String, ProcessedCustomerDTO> kafkaTemplate;
+
+    private final Random rand = new Random();
 
     public CustomerService(KafkaTemplate<String, ProcessedCustomerDTO> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
@@ -32,7 +35,16 @@ public class CustomerService {
     public ProcessedCustomerDTO processCustomer(UnprocessedCustomerDTO customer) throws InterruptedException {
         LocalDateTime start = LocalDateTime.now();
 
-        Thread.sleep(customer.operation().getOperationTime());
+        int chosenNumber = rand.nextInt(0, 99);
+        for (int i = 0; i < customer.operation().getOperationTime() / 1000; i++) {
+            int guess = rand.nextInt(0, 99);
+
+            if (guess == chosenNumber) {
+                break;
+            }
+
+            Thread.sleep(1_000);
+        }
 
         LocalDateTime end = LocalDateTime.now();
 
