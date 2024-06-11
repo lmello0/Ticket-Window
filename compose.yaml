@@ -74,5 +74,22 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
+  init-kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - kafka
+    entrypoint: [ "/bin/sh", "-c"]
+    command: |
+      "
+      kafka-topics --bootstrap-server kafka:9092 --list
+      
+      echo -e 'Creating kafka topics'
+      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic unprocessed_customers --partitions 3
+      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic processed_customers
+      
+      echo -e 'Successfully created the following topics'
+      kafka-topics --bootstrap-server kafka:9092 --list
+      "
+
 volumes:
   postgres:
