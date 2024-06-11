@@ -1,17 +1,17 @@
 package br.com.lmello.common.customer;
 
+import br.com.lmello.common.Constants;
+
 public enum Operation {
     WITHDRAW,
     DEPOSIT,
     PAYMENT;
 
     public int getOperationTime() {
-        final int MILLISECONDS_PER_SECOND = 1000;
-
         return switch (this) {
-            case WITHDRAW -> 60 * MILLISECONDS_PER_SECOND;
-            case DEPOSIT -> 90 * MILLISECONDS_PER_SECOND;
-            case PAYMENT -> 120 * MILLISECONDS_PER_SECOND;
+            case WITHDRAW -> 60 * Constants.SECOND_IN_MS;
+            case DEPOSIT -> 90 * Constants.SECOND_IN_MS;
+            case PAYMENT -> 120 * Constants.SECOND_IN_MS;
         };
     }
 }
