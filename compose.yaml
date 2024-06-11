@@ -1,4 +1,55 @@
 services:
+  frontdoor:
+    hostname: frontdoor
+    image: lmello/ticket-window-frontdoor:latest
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    depends_on:
+      - kafka
+
+  dashboard:
+    hostname: dashboard
+    image: lmello/ticket-window-dashboard:latest
+    ports:
+      - 8081:8080
+    depends_on:
+      - kafka
+      - postgres
+    env_file:
+      - .env
+
+  attendant-1:
+    hostname: attendant-1
+    image: lmello/ticket-window-attendant:latest
+    depends_on:
+      - kafka
+    env_file:
+      - .env
+
+  attendant-2:
+    hostname: attendant-2
+    image: lmello/ticket-window-attendant:latest
+    depends_on:
+      - kafka
+    env_file:
+      - .env
+
+  attendant-3:
+    hostname: attendant-3
+    image: lmello/ticket-window-attendant:latest
+    depends_on:
+      - kafka
+    env_file:
+      - .env
+
+  postgres:
+    hostname: postgres
+    image: postgres
+    env_file:
+      - .env
+
   zookeeper:
     hostname: zookeeper
     image: confluentinc/cp-zookeeper:latest
@@ -22,3 +73,6 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+volumes:
+  postgres:

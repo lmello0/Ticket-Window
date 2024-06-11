@@ -19,7 +19,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <java.version>22</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <modules>
@@ -75,23 +75,6 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <excludes>-->
-<!--                        <exclude>-->
-<!--                            <groupId>org.projectlombok</groupId>-->
-<!--                            <artifactId>lombok</artifactId>-->
-<!--                        </exclude>-->
-<!--                    </excludes>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
 
     <dependencyManagement>
         <dependencies>
