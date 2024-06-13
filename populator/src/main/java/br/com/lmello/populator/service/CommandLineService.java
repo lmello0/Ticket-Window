@@ -17,7 +17,6 @@ import org.springframework.web.client.RestClient;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -29,8 +28,6 @@ public class CommandLineService {
     private final RestClient restClient = RestClient.create();
 
     private final Faker faker = new Faker();
-
-    private final DecimalFormat df = new DecimalFormat("0.00");
 
     private final Logger logger = LoggerFactory.getLogger(CommandLineService.class.getName());
 
