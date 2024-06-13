@@ -3,6 +3,8 @@
 Essa aplicação visa simular o atendimento de um estabelecimento que possui
 uma fila e atendentes.
 
+---
+
 ## Tecnologias
 
 - [Java 17](https://www.oracle.com/br/java/technologies/downloads/#java17)
@@ -10,6 +12,8 @@ uma fila e atendentes.
 - [Kafka](https://kafka.apache.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Docker](https://www.docker.com/)
+
+---
 
 ## Arquitetura
 
@@ -53,7 +57,9 @@ para registro de métricas
 
 7. Executar o módulo [populator](#populator) ou qualquer outro software capaz de fazer requisições HTTP
 
-![Arquitetura](ticket_window_architecture.png)
+![Arquitetura](docs/ticket_window_architecture.png)
+
+---
 
 ## Módulos
 
@@ -107,6 +113,8 @@ Para simular as 6h de expediente, basta executar a aplicação da seguinte forma
 java -jar local/aplicacao/populator/populator-1.0.jar --url <URL_FRONTDOOR> --iterations 21600 --delay 1000
 ```
 
+---
+
 ## Instalação
 
 ### Requisitos
@@ -132,46 +140,8 @@ java -jar local/aplicacao/populator/populator-1.0.jar --url <URL_FRONTDOOR> --it
 
 4. Após alguns segundos, a aplicação deve ter o status `Running` e já será possível utilizá-la.
 
-## Definições
+---
 
-### CustomerDTO
+## INTEGRANTES
 
-```java
-public record CustomerDTO(
-        @NotNull
-        String name,
-        @NotNull
-        Operation operation
-) {
-}
-```
-
-### UnprocessedCustomerDTO
-
-```java
-public record UnprocessedCustomerDTO(
-        @NotNull
-        String name,
-        @NotNull
-        Operation operation,
-        LocalDateTime arrivedAt
-) {
-        public UnprocessedCustomerDTO(CustomerDTO customer) {
-                this(customer.name(), customer.operation(), LocalDateTime.now());
-        }
-}
-```
-
-### ProcessedCustomerDTO
-
-```java
-public record ProcessedCustomerDTO(
-        String name,
-        Operation operation,
-        LocalDateTime arrivedAt,
-        LocalDateTime startProcessingAt,
-        LocalDateTime finishedProcessingAt,
-        Boolean isAfterWorkTime
-) {
-}
-```
+Os integrantes que participaram do trabalho estão no seguinte arquivo: [PARTICIPANTES.md](./PARTICIPANTS.md)
