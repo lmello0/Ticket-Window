@@ -13,7 +13,7 @@
 
     <groupId>br.com.lmello</groupId>
     <artifactId>ticket-window</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>ticket-window</name>
     <description>ticket-window</description>
     <packaging>pom</packaging>
@@ -27,6 +27,7 @@
         <module>common</module>
         <module>dashboard</module>
         <module>attendant</module>
+        <module>populator</module>
     </modules>
 
     <dependencies>

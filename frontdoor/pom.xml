@@ -6,11 +6,11 @@
     <parent>
         <groupId>br.com.lmello</groupId>
         <artifactId>ticket-window</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>frontdoor</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>frontdoor</name>
     <description>frontdoor</description>
 
@@ -27,7 +27,7 @@
         <dependency>
             <groupId>br.com.lmello</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

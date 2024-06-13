@@ -5,11 +5,11 @@
     <parent>
         <groupId>br.com.lmello</groupId>
         <artifactId>ticket-window</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>dashboard</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>dashboard</name>
     <description>dashboard</description>
 
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>br.com.lmello</groupId>
             <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
