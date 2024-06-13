@@ -3,6 +3,8 @@
 Essa aplicação visa simular o atendimento de um estabelecimento que possui
 uma fila e atendentes.
 
+---
+
 ## Tecnologias
 
 - [Java 17](https://www.oracle.com/br/java/technologies/downloads/#java17)
@@ -10,6 +12,8 @@ uma fila e atendentes.
 - [Kafka](https://kafka.apache.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Docker](https://www.docker.com/)
+
+---
 
 ## Arquitetura
 
@@ -54,6 +58,8 @@ para registro de métricas
 7. Executar o módulo [populator](#populator) ou qualquer outro software capaz de fazer requisições HTTP
 
 ![Arquitetura](ticket_window_architecture.png)
+
+---
 
 ## Módulos
 
@@ -107,6 +113,8 @@ Para simular as 6h de expediente, basta executar a aplicação da seguinte forma
 java -jar local/aplicacao/populator/populator-1.0.jar --url <URL_FRONTDOOR> --iterations 21600 --delay 1000
 ```
 
+---
+
 ## Instalação
 
 ### Requisitos
@@ -131,6 +139,8 @@ java -jar local/aplicacao/populator/populator-1.0.jar --url <URL_FRONTDOOR> --it
 3. Inicie a aplicação com `docker compose up`;
 
 4. Após alguns segundos, a aplicação deve ter o status `Running` e já será possível utilizá-la.
+
+---
 
 ## Definições
 
