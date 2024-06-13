@@ -21,14 +21,20 @@ consumidas pelos [módulos](#módulos).
 1. Usuário faz a requisição para endpoint `/queue`, é verificado se
 a aplicação está em período de trabalho (6h), se estiver, o cliente vai
 para o **passo 2**, caso contrário, recebe a mensagem.
-   ``json
+   ```json
    {
       "message": "We are not in work hour!"
    }
-   ``
+   ```
 
-2. Cliente é posto na fila (tópico) `unprocessed_customers` enquanto não
-tem atendentes disponíveis.
+2. Cliente recebe a mensagem 
+    ```json
+   {
+      "message": "You are in the queue, and must be attended in a few moments"
+   }
+    ```
+    e é posto na fila (tópico) `unprocessed_customers` enquanto não
+    tem atendentes disponíveis.
 
 3. Atendente "consome" o próximo da fila e processa conforme a operação
     
@@ -45,17 +51,20 @@ para registro de métricas
 
 6. O admin consulta os dados do dia através do endpoint `/stats?date=<DATA YYYYMMDD>`
 
+7. Executar o módulo [populator](#populator) ou qualquer outro software capaz de fazer requisições HTTP
+
 ![Arquitetura](ticket_window_architecture.png)
 
 ## Módulos
 
-A aplicação está subdividida em 4 módulos, 3 principais e "independentes"
-e 1 auxiliar:
+A aplicação está subdividida em 4 módulos, 3 principais e "independentes", 1 auxiliar
+e um "standalone":
 
 - [common](#common)
 - [frontdoor](#frontdoor)
 - [attendant](#attendant)
 - [dashboard](#dashboard)
+- [populator](#populator)
 
 ### Common
 
@@ -83,6 +92,20 @@ através da fila (tópico) `processed_customers` e disponibilizá-los por
 um endpoint `/stats`. Esse é o único módulo que faz conexão com o banco de dados
 **PostgreSQL**.
 
+### Populator
+
+Módulo responsável por fazer a simulação de usuários, por este módulo serão feitas
+as requisições para o módulo [frontdoor](#frontdoor). Recebe 3 parâmetros de linha de comando:
+
+- `--url <URL_FRONTDOOR>`
+- `--iterations <NUM_ITERACOES>`
+- `--delay <DELAY_ENTRE_ITERACOES_EM_MS>`
+
+Para simular as 6h de expediente, basta executar a aplicação da seguinte forma:
+
+```shell
+java -jar local/aplicacao/populator/populator-1.0.jar --url <URL_FRONTDOOR> --iterations 21600 --delay 1000
+```
 
 ## Instalação
 
