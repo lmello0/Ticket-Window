@@ -7,7 +7,10 @@ services:
     env_file:
       - .env
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
+      init-kafka:
+        condition: service_completed_successfully
 
   dashboard:
     hostname: dashboard
@@ -15,40 +18,41 @@ services:
     ports:
       - 8081:8080
     depends_on:
-      - kafka
-      - postgres
+      kafka:
+        condition: service_healthy
+      init-kafka:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
     env_file:
       - .env
 
-  attendant-1:
-    hostname: attendant-1
+  attendant:
+    hostname: attendant
     image: lmello/ticket-window-attendant:latest
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
+      init-kafka:
+        condition: service_completed_successfully
     env_file:
       - .env
-
-  attendant-2:
-    hostname: attendant-2
-    image: lmello/ticket-window-attendant:latest
-    depends_on:
-      - kafka
-    env_file:
-      - .env
-
-  attendant-3:
-    hostname: attendant-3
-    image: lmello/ticket-window-attendant:latest
-    depends_on:
-      - kafka
-    env_file:
-      - .env
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
 
   postgres:
     hostname: postgres
     image: postgres
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 30s
+      timeout: 60s
+      retries: 3
+      start_period: 80s
 
   zookeeper:
     hostname: zookeeper
@@ -58,12 +62,18 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   kafka:
     hostname: kafka
     image: confluentinc/cp-kafka:latest
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
       - 9092:9092
     environment:
@@ -73,11 +83,17 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: kafka-topics --bootstrap-server localhost:9092 --list
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   init-kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
     entrypoint: [ "/bin/sh", "-c"]
     command: |
       "
